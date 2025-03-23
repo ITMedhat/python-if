@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جمل التحكم الشرطي في بايثون</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Arabic-specific styles */
+        html[lang="ar"] body {
+            direction: rtl;
+            text-align: right;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #E0E0E0;
+            background-color: #1A1A1A;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #004B87, #007BFF);
+            color: white;
+            padding: 1rem 2rem;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .header-content h1 {
+            font-size: 2.5rem;
+            text-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+            animation: glowPulse 2s ease-in-out infinite;
+        }
+
+        .header-content h1 i {
+            color: #ffd700;
+            margin-left: 0.5rem;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1000px;
+            margin: 100px auto 20px;
+            padding: 1rem;
+        }
+
+        section {
+            background: #2D2D2D;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            margin-top: 35px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 123, 255, 0.3);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+
+        section h2 {
+            color: #00C4FF;
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            text-shadow: 0 0 10px rgba(0, 196, 255, 0.5);
+        }
+
+        section h2 i {
+            color: #ff6f61;
+            margin-left: 0.5rem;
+            transition: transform 0.5s;
+        }
+
+        section h2:hover i {
+            transform: rotate(360deg);
+        }
+
+        section h3 {
+            color: #E0E0E0;
+            font-size: 1.6rem;
+            margin: 1rem 0 0.5rem;
+            text-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+        }
+
+        section p, section li {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+        }
+
+        section ul {
+            list-style: none;
+        }
+
+        section ul li:before {
+            content: "\f054";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: #00C4FF;
+            margin-right: 0.5rem;
+        }
+
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            margin-bottom: 0.5rem;
+            position: relative;
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
+            animation: fadeIn 1s ease-in-out;
+            font-size: 1.1rem;
+        }
+
+        code {
+            color: #f8f8f2;
+        }
+
+        p code, li code {
+            background: #3A3A3A;
+            color: #FF79C6;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        /* Syntax Highlighting */
+        .language-python .keyword { color: #ff79c6; }
+        .language-python .string { color: #f1fa8c; }
+        .language-python .comment { color: #6272a4; }
+        .language-python .function { color: #50fa7b; }
+        .language-python .number { color: #bd93f9; }
+        .language-python .boolean { color: #bd93f9; }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #005B99;
+            color: white;
+            box-shadow: 0 -4px 10px rgba(0, 123, 255, 0.3);
+            font-size: 1.2rem;
+        }
+
+        footer i {
+            color: #ff6f61;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes glowPulse {
+            0% { text-shadow: 0 0 5px rgba(0, 123, 255, 0.5); }
+            50% { text-shadow: 0 0 15px rgba(0, 123, 255, 0.8); }
+            100% { text-shadow: 0 0 5px rgba(0, 123, 255, 0.5); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                padding: 0.5rem 1rem;
+            }
+
+            .header-content h1 {
+                font-size: 2rem;
+            }
+
+            main {
+                padding: 1rem;
+                margin: 80px auto 10px;
+            }
+
+            section {
+                padding: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            section h2 {
+                font-size: 1.8rem;
+            }
+
+            section h3 {
+                font-size: 1.4rem;
+            }
+
+            section p, section li {
+                font-size: 1rem;
+            }
+
+            pre {
+                font-size: 0.95rem;
+                padding: 0.8rem;
+            }
+
+            footer {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-content h1 {
+                font-size: 1.6rem;
+            }
+
+            main {
+                padding: 0.5rem;
+                margin: 70px auto 10px;
+            }
+
+            section {
+                padding: 0.8rem;
+            }
+
+            section h2 {
+                font-size: 1.5rem;
+            }
+
+            section h3 {
+                font-size: 1.2rem;
+            }
+
+            section p, section li {
+                font-size: 0.9rem;
+            }
+
+            pre {
+                font-size: 0.85rem;
+                padding: 0.6rem;
+            }
+
+            footer {
+                padding: 0.5rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <h1><i class="fas fa-code"></i> جمل التحكم الشرطي في بايثون</h1>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- المقدمة -->
+        <section id="intro">
+            <h2><i class="fas fa-book"></i> مقدمة</h2>
+            <p>Conditional control statements are used to make decisions in programs based on certain conditions. In short, they are a way to direct the flow of a program depending on whether certain conditions are true or false.</p>
+            <p>جمل التحكم الشرطي تُستخدم لاتخاذ قرارات في البرامج بناءً على شروط معينة. باختصار، هي طريقة لتوجيه سير البرنامج اعتمادًا على ما إذا كانت شروط معينة صحيحة أو خاطئة.</p>
+        </section>
+
+        <!-- تركيب جملة if الأساسية -->
+        <section id="basic">
+            <h2><i class="fas fa-code"></i> تركيب جملة if الأساسية</h2>
+            <p>مثال بسيط:</p>
+            <pre class="language-python"><code>if x > 5:
+    print("x greater than 5")</code></pre>
+            <p>التفسير: إذا كان المتغير x أكبر من 5، سيتم طباعة "x greater than 5".</p>
+        </section>
+
+        <!-- أمثلة -->
+        <section id="examples">
+            <h2><i class="fas fa-list"></i> أمثلة</h2>
+            <h3>استخدام else مع if</h3>
+            <pre class="language-python"><code>if age < 18:
+    print("You are a minor.")
+else:
+    print("You are an adult.")</code></pre>
+            <p>التفسير: إذا كان العمر أقل من 18، سيتم طباعة "You are a minor"، وإلا سيتم طباعة "You are an adult".</p>
+
+            <h3>استخدام elif</h3>
+            <pre class="language-python"><code>if mark >= 90:
+    print("Excellent")
+elif mark >= 75:
+    print("Very Good")
+elif mark >= 60:
+    print("Good")
+else:
+    print("Fail")</code></pre>
+            <p>التفسير: يتم اختبار الشروط بالترتيب، إذا كانت الدرجة بين 75 و89، سيتم طباعة "Very Good".</p>
+
+            <h3>استخدام and و or</h3>
+            <pre class="language-python"><code>if age > 18 and age < 65:
+    print("You are an adult but not a senior.")</code></pre>
+
+            <h3>Shorthand if-else</h3>
+            <pre class="language-python"><code>result = "Pass" if score >= 60 else "Fail"</code></pre>
+
+            <h3>Nested if</h3>
+            <pre class="language-python"><code>if age >= 18:
+    if has_license:
+        print("You can drive.")
+    else:
+        print("You need a license.")
+else:
+    print("You are too young.")</code></pre>
+
+            <h3>استخدام input</h3>
+            <pre class="language-python"><code>age = int(input("Enter your age: "))
+if age >= 18:
+    print("You are an adult.")
+else:
+    print("You are a minor.")</code></pre>
+
+            <h3>Password verification</h3>
+            <pre class="language-python"><code>password = input("Enter password: ")
+if password == "secret123":
+    print("Access granted!")
+else:
+    print("Access denied!")</code></pre>
+        </section>
+
+        <!-- التمارين -->
+        <section id="exercises">
+            <h2><i class="fas fa-dumbbell"></i> تمارين</h2>
+            <h3>تمرين 1</h3>
+            <p>اكتب برنامج يطلب من المستخدم عمره ويطبع "You are a minor" إذا كان أقل من 18، و"You are an adult" إذا كان 18 أو أكبر.</p>
+            <h3>تمرين 2</h3>
+            <p>اكتب برنامج يطلب من المستخدم درجة امتحان (من 0 إلى 100) ويطبع النتيجة كالتالي:</p>
+            <ul>
+                <li>Excellent إذا كانت الدرجة 90 أو أعلى.</li>
+                <li>Very Good إذا كانت الدرجة بين 75 و89.</li>
+                <li>Good إذا كانت الدرجة بين 60 و74.</li>
+                <li>Fail إذا كانت الدرجة أقل من 60.</li>
+            </ul>
+            <h3>تمرين 3</h3>
+            <p>اكتب برنامج يقارن بين رقمين يدخلهما المستخدم ويطبع أيهما أكبر أو إذا كانا متساويين.</p>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>تم الإنشاء بواسطة <i class="fas fa-heart"></i> xAI</p>
+    </footer>
+</body>
+</html>
